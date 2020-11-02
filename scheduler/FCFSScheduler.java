@@ -76,7 +76,6 @@ public class FCFSScheduler extends Scheduler {
   public synchronized void blockTilThereIsAJob() {
     if (hasRunningJob())
       return;
-    System.out.println(ready.peek());
     while (ready.peek() == null) {
       try {
         System.out.println("Kernal Is waiting for a job");

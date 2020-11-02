@@ -2,6 +2,8 @@ package scheduler;
 
 import java.util.ArrayList;
 
+import jdk.javadoc.internal.doclets.toolkit.resources.doclets;
+
 /**
  * <p>Title: GanntChart</p>
  * <p>Description: Maintain data necessary to render a Gannt chart.</p>
@@ -35,7 +37,13 @@ public class GanntChart {
 	}
 	
 	public void print() {
-		System.out.println("TO_DO GanntChart.print not yet implemented");
+		System.out.println("GANNT CHART:");
+		System.out.println("BurstStart		BurstEnd	JOB");
+		for(int i=0; i<events.size(); i++){
+			GanntRecord record = events.get(i);
+			System.out.printf("%d			%d		%s",record.startTime-systemStartTime,record.endTime-systemStartTime,record.eventDescriptor);
+			System.out.println();
+		}
 	}
 	
 	/**

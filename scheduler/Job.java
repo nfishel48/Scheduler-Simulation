@@ -102,7 +102,7 @@ class Job extends Thread {
 	  myOS.getSingleThreadMutex().lock();
 	  
 	  startTime = System.currentTimeMillis();
-	  while (System.currentTimeMillis()-startTime < burstTime) {// Not yet exhausted my run-time
+    while (System.currentTimeMillis()-startTime < burstTime) {// Not yet exhausted my run-time
 		  work.doWork(); // This should return in only a few milliseconds
 		  try {
 			sleep(10);
@@ -111,7 +111,6 @@ class Job extends Thread {
 			  e.printStackTrace();
 		  }
 	  }
-		  
 	  exit();  //exit needs to signal the Condition, and release the lock
   }
   
@@ -120,6 +119,7 @@ class Job extends Thread {
    */
   public void exit()
   {
+    myOS.done.signal();
     myOS.exit();
   }
   

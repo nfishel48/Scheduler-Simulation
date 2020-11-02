@@ -1,103 +1,102 @@
 package scheduler;
+
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * <p>Title: SystemSimulator</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
- * <p>Company: </p>
+ * <p>
+ * Title: SystemSimulator
+ * </p>
+ * <p>
+ * Description:
+ * </p>
+ * <p>
+ * Copyright: Copyright (c) 2015, 2004 by Matt Evett
+ * </p>
+ * <p>
+ * Company:
+ * </p>
+ * 
  * @author Matt Evett
- * @version 2.0
- * extends Thread: this class simulates the kernel.
+ * @version 2.0 extends Thread: this class simulates the kernel.
  */
 
-class SystemSimulator extends Thread
-{
+class SystemSimulator extends Thread {
   private static final int ILLEGAL_TERMINATION = -20;
-  private final Scheduler myScheduler; // scheduler for jobs	
+  private final Scheduler myScheduler; // scheduler for jobs
   private volatile boolean jobsRemainToBeSubmitted = true; // true if not all jobs have yet been submitted
-  private final ReentrantLock singleThreadMutex;  // Used to guarantee that only
-  						//...one of either the OS or any Job thread is running at any one time.
-  
+  private final ReentrantLock singleThreadMutex; // Used to guarantee that only
+  public Condition done;
+
   // Used to store information to create a Gannt chart
-  private final GanntChart chart = new GanntChart(); 
-  
+  private final GanntChart chart = new GanntChart();
+
   public ReentrantLock getSingleThreadMutex() {
-	return singleThreadMutex;
+    return singleThreadMutex;
   }
 
-  
   /**
-   * SystemSimulator() constructor is private to force the use of other constructors.
+   * SystemSimulator() constructor is private to force the use of other
+   * constructors.
    */
   @SuppressWarnings("unused")
   private SystemSimulator() {
-	  myScheduler = null;
-	  singleThreadMutex = null;
+    myScheduler = null;
+    singleThreadMutex = null;
   }
 
-  public SystemSimulator(Scheduler s){
-	  singleThreadMutex = new ReentrantLock();
-	  myScheduler = s;
+  public SystemSimulator(Scheduler s) {
+    singleThreadMutex = new ReentrantLock();
+    myScheduler = s;
+    done = singleThreadMutex.newCondition();
   }
 
   /*
-   * The basic structure of this method is straightforward:
-   * the simulator sits in a loop, sleeping. The simulator awakens only when it is interrupted ("poked").
+   * The basic structure of this method is straightforward: the simulator sits in
+   * a loop, sleeping. The simulator awakens only when it is interrupted
+   * ("poked").
    */
 
-public void run()
-  {
-    long currentIdleTimeStart; 	// Wall time when current idle period started
-    long currentIdleTimeEnd; 	// Wall time when current idle period ended
+  public void run() {
+    long currentIdleTimeStart; // Wall time when current idle period started
+    long currentIdleTimeEnd; // Wall time when current idle period ended
 
-	//The OS thread should be started before any Job thread so it can gain this lock first
+    // The OS thread should be started before any Job thread so it can gain this
+    // lock first
     singleThreadMutex.lock();
     chart.start();
-    
-    
+
     // loop while we have jobs left to be scheduled or scheduler has jobs scheduled
     while (jobsRemainToBeSubmitted || myScheduler.hasJobs()) {
-    	/* 
-    	 * If readyQ is empty and no job running, OS will block on readyQ, submittor
-    	 * will signal it.  
-    	 * If there's a running Job, TimeSlice will interrupt that, not the OS.
-    	 */
+      /*
+       * If readyQ is empty and no job running, OS will block on readyQ, submittor
+       * will signal it. If there's a running Job, TimeSlice will interrupt that, not
+       * the OS.
+       */
 
-    	currentIdleTimeStart = System.currentTimeMillis(); // start idle timer
-    	// If there are no jobs to schedule, block on readyQ, waiting on Submittor to 
-    	//  signal it.
-    	myScheduler.blockTilThereIsAJob();
-    	currentIdleTimeEnd = System.currentTimeMillis(); // end idle timer
-    	if (currentIdleTimeEnd>currentIdleTimeStart)
-			chart.recordEvent(currentIdleTimeStart,currentIdleTimeEnd,"IDLE");
+      currentIdleTimeStart = System.currentTimeMillis(); // start idle timer
+      // If there are no jobs to schedule, block on readyQ, waiting on Submittor to
+      // signal it.
+      myScheduler.blockTilThereIsAJob();
+      currentIdleTimeEnd = System.currentTimeMillis(); // end idle timer
+      if (currentIdleTimeEnd > currentIdleTimeStart)
+        chart.recordEvent(currentIdleTimeStart, currentIdleTimeEnd, "IDLE");
+      System.out.println("Found a Job");
 
-    	
-		myScheduler.makeRun();  // the next Job should start running but immediately block on OS mutex lock
-    System.out.println("TO_DO Finish SystemSimulator.run()");
-    
-		/* Provide code that uses the Job's Condition to block the kernel simulator thread
-		 * (i.e., the thread that is executing this code).  Use the await() method to do this.
-		 * This will establish the mutex for the kernel and the Jobs.
-		 */
-    _await();
-		
-    	//Should get to here when that Job completes (calls Exit).
+      System.out.println("Running a job");
+      myScheduler.makeRun(); // the next Job should start running but immediately block on OS mutex lock
+
+      try {
+        done.await();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      //Should get to here when that Job completes (calls Exit).
+      System.out.println("Job complete!");
     } // exit loop, we have no jobs left and none scheduled
     chart.end();
     // print gannt chart
     chart.print();
-  }
-
-  public void _await(){
-    //block the kernal thread(this thread)
-    //Condtion.await()
-    //Condition.signal()
-
-    //give the lock to the job
-
-    //return the lock when the job is finished and upblock this thread.
-
   }
   
   /*

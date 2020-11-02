@@ -13,7 +13,6 @@ package scheduler;
 public class WorkFactory {
 	private int jobCount = 0;
 	public JobWorkable createWork() {
-		System.out.println("TO_DO: complete WorkFactory.createWork");
 		JobWorkable worker = new JobWorker();
 		return worker;
 		/* 

@@ -13,6 +13,7 @@ import java.util.Queue;
  */
 
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class FCFSScheduler extends Scheduler {
 
@@ -36,8 +37,10 @@ public class FCFSScheduler extends Scheduler {
    * while blockTilThereIsAJob will probably be executed by the kernel
    * (SystemSimulator) thread.
    */
-  public void add(Job J) {
-
+  public synchronized void add(Job J) {
+    ready.add(J);
+    System.out.println("added job"+J+"to the readyQ");
+    notifyAll();
   }
 
   /**
@@ -57,8 +60,8 @@ public class FCFSScheduler extends Scheduler {
     if (ready.peek() == null) {
       return false;
     } else {
-      Job currentJob = ready.remove();
-      currentJob.start();
+      currentlyRunningJob = ready.remove();
+      currentlyRunningJob.start();
       return true;
     }
   }
@@ -70,17 +73,19 @@ public class FCFSScheduler extends Scheduler {
    * 
    * 
    */
-  public void blockTilThereIsAJob() {
+  public synchronized void blockTilThereIsAJob() {
     if (hasRunningJob())
       return;
-    System.out.println("TO_DO: blockTilThereIsAJob not yet implemented");
+    System.out.println(ready.peek());
     while (ready.peek() == null) {
       try {
+        System.out.println("Kernal Is waiting for a job");
         wait();
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }
+    notify();
 	  System.out.println("evidently there is now a job on readyQ");
   }
 }

@@ -53,11 +53,8 @@ class Submittor extends Thread {
     for (int i = 0; i<myJobDescs.size(); i++) {
       Scanner string = new Scanner(myJobDescs.get(i));
       String id = string.next(); // ID/name of the Job (simulated process) 
-      System.out.println(id);
       int delay = string.nextInt(); // msec delay until this Job is submitted to the kernel
-      System.out.println(delay);
       String burstDescription = string.next();  // The description of that Job.  (For FCFS this will be a single integer token)
-      System.out.println(burstDescription);
     	string.close();
 
     	try {

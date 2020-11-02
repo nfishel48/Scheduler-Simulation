@@ -1,14 +1,21 @@
 package scheduler;
 
 /**
- * <p>Title: Scheduler</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
+ * <p>
+ * Title: Scheduler
+ * </p>
+ * <p>
+ * Description:
+ * </p>
+ * <p>
+ * Copyright: Copyright (c) 2015, 2004 by Matt Evett
+ * </p>
+ * 
  * @author Matt Evett
- * @version 2.0
- * Manages the scheduling for the OS.  You'll need to extend this to make a concrete class.
- * It should be possible to make various concrete classes that implement different kinds of
- * schedulers (round robin, etc.)
+ * @version 2.0 Manages the scheduling for the OS. You'll need to extend this to
+ *          make a concrete class. It should be possible to make various
+ *          concrete classes that implement different kinds of schedulers (round
+ *          robin, etc.)
  */
 
 public abstract class Scheduler {
@@ -65,6 +72,7 @@ public abstract class Scheduler {
 	 * invoke Thread.start() on it.
 	 */
 	public abstract boolean makeRun();
+		//remove job from the ready queue and store as the currently running job
 
 
 	/**
@@ -79,4 +87,10 @@ public abstract class Scheduler {
 	 * 
 	 */
 	public abstract  void  blockTilThereIsAJob(); 
+
+	//check ready queue
+
+	//if a job is ready give it to  the OS
+
+	//else block the OS thread
 }

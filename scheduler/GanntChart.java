@@ -17,6 +17,7 @@ public class GanntChart {
 	private ArrayList<GanntRecord> events = new ArrayList<GanntRecord>();
 
 	public GanntChart(){
+		start();
 
 	}
 	

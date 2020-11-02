@@ -74,18 +74,30 @@ public void run()
 
     	
 		myScheduler.makeRun();  // the next Job should start running but immediately block on OS mutex lock
-		System.out.println("TO_DO Finish SystemSimulator.run()");
+    System.out.println("TO_DO Finish SystemSimulator.run()");
+    
 		/* Provide code that uses the Job's Condition to block the kernel simulator thread
 		 * (i.e., the thread that is executing this code).  Use the await() method to do this.
 		 * This will establish the mutex for the kernel and the Jobs.
 		 */
-
+    _await();
 		
     	//Should get to here when that Job completes (calls Exit).
     } // exit loop, we have no jobs left and none scheduled
     chart.end();
     // print gannt chart
     chart.print();
+  }
+
+  public void _await(){
+    //block the kernal thread(this thread)
+    //Condtion.await()
+    //Condition.signal()
+
+    //give the lock to the job
+
+    //return the lock when the job is finished and upblock this thread.
+
   }
   
   /*

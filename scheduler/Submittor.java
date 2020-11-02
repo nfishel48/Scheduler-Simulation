@@ -1,5 +1,7 @@
 package scheduler;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
@@ -48,18 +50,18 @@ class Submittor extends Thread {
    */
   public void run() {
     // iterate through jobs strings, parse the string, create jobs and add to operating system.
-    for (String jobDesc : myJobDescs) {
-    	String id; // ID/name of the Job (simulated process) 
-    	int delay; // msec delay until this Job is submitted to the kernel
-    	String burstDescription;  // The description of that Job.  (For FCFS this will be a single integer token)
-    	
-    	System.out.println("TO_DO Complete Submittor.run()");
-    	/*
-    	 * Provide code that will set id, delay, and burstDescription from jobDesc.
-    	 * 
-    	 */
+    for (int i = 0; i<myJobDescs.size(); i++) {
+      Scanner string = new Scanner(myJobDescs.get(i));
+      String id = string.next(); // ID/name of the Job (simulated process) 
+      System.out.println(id);
+      int delay = string.nextInt(); // msec delay until this Job is submitted to the kernel
+      System.out.println(delay);
+      String burstDescription = string.next();  // The description of that Job.  (For FCFS this will be a single integer token)
+      System.out.println(burstDescription);
+    	string.close();
+
     	try {
-    		sleep( delay ); // wait until submission
+        sleep( delay ); // wait until submission
     	}
     	catch (InterruptedException e) {
     		System.err.println("Submittor should never be interrupted");

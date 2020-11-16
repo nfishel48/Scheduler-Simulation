@@ -2,7 +2,6 @@ package scheduler;
 
 import java.util.ArrayList;
 
-import jdk.javadoc.internal.doclets.toolkit.resources.doclets;
 
 /**
  * <p>Title: GanntChart</p>

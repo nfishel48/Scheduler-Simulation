@@ -2,16 +2,6 @@ package scheduler;
 
 import java.util.ArrayList;
 
-
-/**
- * <p>Title: GanntChart</p>
- * <p>Description: Maintain data necessary to render a Gannt chart.</p>
- * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
- * @author Matt Evett
- * @version 2.0
- * simulates the scheduler
- */
-
 public class GanntChart {
 	private long systemStartTime; // wall time when the Gannt chart starts.  Is used
 								// to display all timings as relative to this time
@@ -45,11 +35,7 @@ public class GanntChart {
 		}
 	}
 	
-	/**
-	 * Inner class to record the data of one Gannt chart event
-	 * @author matt
-	 *
-	 */
+
 	private class GanntRecord {
 		long startTime;
 		long endTime;

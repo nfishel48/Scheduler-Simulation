@@ -3,15 +3,6 @@ package scheduler;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * <p>Title: FCFSScheduler</p>
- * <p>Description: Component of the simulate operating system that encapsulates FCFS job scheduling.</p>
- * <p>Copyright: Copyright (c) 2015, 2004</p>
- * <p>Company: </p>
- * @author Matt Evett
- * @version 2.0
- */
-
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
 

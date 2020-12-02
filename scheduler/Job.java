@@ -1,16 +1,6 @@
 package scheduler;
 import java.util.concurrent.locks.Condition;
 
-/**
- * <p>Title: Job</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2016, 2015, 2004 by Matt Evett</p>
- * <p>Company: </p>
- * @author Matt Evett
- * @version 2.1
- * Each instance of this class represents a process running within the virtual system being simulated
- * by the entire project.
- */
 
 class Job extends Thread {
 

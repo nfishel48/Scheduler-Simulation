@@ -2,27 +2,10 @@ package scheduler;
 import java.io.*;
 import java.util.*;
 
-/**
- * <p>Title: RunScheduler</p>
- * <p>Description: The driver class for the scheduler project.</p>
- * <p>Copyright: Copyright (c) 2004</p>
- * <p>Company: Eastern Michigan University</p>
- * @author Matt Evett
- * @version 1.0
- * @author Clark Peters
- * @version 2.0
- */
+
 
 import java.util.ArrayList;
 
-/**
- * <p>Title: RunScheduler</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
- * @author Matt Evett
- * @version 2.0
- * The main driver for the project.
- */
 
 public class RunScheduler {
 

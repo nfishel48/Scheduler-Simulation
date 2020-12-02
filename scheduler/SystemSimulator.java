@@ -3,23 +3,6 @@ package scheduler;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * <p>
- * Title: SystemSimulator
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2015, 2004 by Matt Evett
- * </p>
- * <p>
- * Company:
- * </p>
- * 
- * @author Matt Evett
- * @version 2.0 extends Thread: this class simulates the kernel.
- */
 
 class SystemSimulator extends Thread {
   private static final int ILLEGAL_TERMINATION = -20;
